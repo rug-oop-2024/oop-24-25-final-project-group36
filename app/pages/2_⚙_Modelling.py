@@ -6,9 +6,11 @@ from app.core.system import AutoMLSystem
 from autoop.core.ml.dataset import Artifact
 from autoop.core.ml.dataset import Dataset
 from autoop.functional.feature import detect_feature_types
-from autoop.core.ml.metric import get_metric, CLASSIFICATION_METRICS, REGRESSION_METRICS
+from autoop.core.ml.metric import get_metric, \
+    CLASSIFICATION_METRICS, REGRESSION_METRICS
 from autoop.core.ml.pipeline import Pipeline
-from autoop.core.ml.model import get_model, CLASSIFICATION_MODELS, REGRESSION_MODELS
+from autoop.core.ml.model import get_model, \
+    CLASSIFICATION_MODELS, REGRESSION_MODELS
 
 st.set_page_config(page_title="Modelling", page_icon="📈")
 
@@ -19,7 +21,8 @@ def write_helper_text(text: str):
 
 st.write("# ⚙ Modelling")
 write_helper_text(
-    "In this section, you can design a machine learning pipeline to train a model on a dataset."
+    "In this section, you can design a \
+    machine learning pipeline to train a model on a dataset."
 )
 
 automl = AutoMLSystem.get_instance()
@@ -42,7 +45,8 @@ def artifact_to_dataset(artifact: Artifact) -> Dataset:
 
 artifact_datasets = [artifact_to_dataset(artifact) for artifact in datasets]
 selected_dataset = st.selectbox(
-    "Select a dataset for modeling", artifact_datasets, format_func=lambda x: x.name
+    "Select a dataset for modeling",
+    artifact_datasets, format_func=lambda x: x.name
 )
 
 if selected_dataset:
@@ -57,7 +61,8 @@ if selected_dataset:
     formatted_feature_names = [
         f"{feature.name} ({feature.type})" for feature in features
     ]
-    feature_map = {f"{feature.name} ({feature.type})": feature for feature in features}
+    feature_map = {
+        f"{feature.name} ({feature.type})": feature for feature in features}
 
     selected_input_feature_names = st.multiselect(
         "Select input features (multiple)", options=formatted_feature_names
@@ -74,7 +79,7 @@ if selected_dataset:
 
     detected_feature_type_str = selected_target_feature.type
 
-    st.write("voila this is the detected task type:", detected_feature_type_str)
+    st.write("This is the detected task type:", detected_feature_type_str)
     if detected_feature_type_str == "categorical":
         model_name = CLASSIFICATION_MODELS
         metric_name = CLASSIFICATION_METRICS
@@ -106,7 +111,8 @@ if selected_dataset:
             ", ".join([feature.name for feature in selected_input_features]),
             selected_target_feature.name,
             selected_model_name,
-            f"{split_ratio * 100:.0f}% Train / {100 - split_ratio * 100:.0f}% Test",
+            f"{split_ratio * 100:.0f}% Train / \
+                {100 - split_ratio * 100:.0f}% Test",
             ", ".join(selected_metric_name),
         ],
     }
@@ -134,7 +140,8 @@ if st.button("Train!"):
     train_df = pd.DataFrame(
         results["train_metrics"], columns=["Metric", "Training Score"]
     )
-    test_df = pd.DataFrame(results["test_metrics"], columns=["Metric", "Testing Score"])
+    test_df = pd.DataFrame(results["test_metrics"],
+                           columns=["Metric", "Testing Score"])
 
     st.subheader("Training Results")
     st.table(train_df)
@@ -166,5 +173,6 @@ if st.session_state.training_complete:
 
         registered_data = automl.registry.register(pipeline_artifact)
         st.success(
-            f"Pipeline '{pipeline_name}' version {pipeline_version} saved successfully."
+            f"Pipeline '{pipeline_name}' version {pipeline_version} \
+                saved successfully."
         )

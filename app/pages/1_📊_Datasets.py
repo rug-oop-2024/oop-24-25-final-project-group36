@@ -23,7 +23,8 @@ def generate_file_hash(file) -> str:
 
 existing_asset_paths = {dataset.asset_path for dataset in datasets}
 
-uploaded_csv_file = st.file_uploader("Upload your CSV file here:)", type=["csv"])
+uploaded_csv_file = st.file_uploader(
+    "Upload your CSV file here:)", type=["csv"])
 if uploaded_csv_file:
     file_name = os.path.splitext(uploaded_csv_file.name)[0]
     file_hash = generate_file_hash(uploaded_csv_file)
@@ -38,7 +39,8 @@ if uploaded_csv_file:
         )
 
         automl.registry.register(converted_dataset)
-        st.success(f"'{converted_dataset.name}' successfully uploaded and registered!")
+        st.success(f"'{converted_dataset.name}' \
+                   successfully uploaded and registered!")
         st.rerun()
 
 col1, col2 = st.columns([3, 1])

@@ -22,12 +22,14 @@ if pipelines:
         loaded_summary_df = pipeline_data["summary_df"]
 
         st.subheader(
-            f"Pipeline Summary: {selected_pipeline.name} (v{selected_pipeline.version})"
+            f"Pipeline Summary: \
+            {selected_pipeline.name} (v{selected_pipeline.version})"
         )
         st.table(loaded_summary_df)
 
         st.subheader("Make Predictions")
-        uploaded_csv = st.file_uploader("Upload CSV for prediction", type=["csv"])
+        uploaded_csv = st.file_uploader(
+            "Upload CSV for prediction", type=["csv"])
 
         if uploaded_csv:
             input_data = pd.read_csv(uploaded_csv)
