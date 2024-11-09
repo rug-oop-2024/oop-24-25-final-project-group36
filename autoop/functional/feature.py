@@ -19,7 +19,8 @@ def detect_feature_types(dataset: Dataset) -> List[Feature]:
     features = []
     for column in data.columns:
         unique_values = data[column].dropna().unique()
-        if pd.api.types.is_numeric_dtype(data[column]) and set(unique_values).issubset({0, 1}):
+        if pd.api.types.is_numeric_dtype(data[column]) \
+                and set(unique_values).issubset({0, 1}):
             feature_type = 'categorical'
         elif pd.api.types.is_numeric_dtype(data[column]):
             feature_type = 'numerical'

@@ -13,7 +13,7 @@ if pipelines:
     selected_pipeline = st.selectbox(
         "Select a pipeline to load",
         pipelines,
-        format_func=lambda x: f"{x.name} (v{x.version})"
+        format_func=lambda x: f"{x.name} (v{x.version})",
     )
 
     if selected_pipeline:
@@ -21,7 +21,9 @@ if pipelines:
         loaded_pipeline = pipeline_data["pipeline"]
         loaded_summary_df = pipeline_data["summary_df"]
 
-        st.subheader(f"Pipeline Summary: {selected_pipeline.name} (v{selected_pipeline.version})")
+        st.subheader(
+            f"Pipeline Summary: {selected_pipeline.name} (v{selected_pipeline.version})"
+        )
         st.table(loaded_summary_df)
 
         st.subheader("Make Predictions")
@@ -32,9 +34,13 @@ if pipelines:
             st.write("Uploaded Data Preview", input_data.head())
 
             feature_names = list(input_data.columns)
-            selected_input_features = st.multiselect("Select input features", feature_names)
-            selected_target_feature = st.selectbox("Select target feature", feature_names)
-            
+            selected_input_features = st.multiselect(
+                "Select input features", feature_names
+            )
+            selected_target_feature = st.selectbox(
+                "Select target feature", feature_names
+            )
+
 
 else:
     st.warning("No pipelines available. Please save a pipeline first.")
