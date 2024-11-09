@@ -29,7 +29,7 @@ class Pipeline():
         self._split = split
         if target_feature.type == "categorical" and model.type != "classification":
             raise ValueError("Model type must be classification for categorical target feature")
-        if target_feature.type == "continuous" and model.type != "regression":
+        if target_feature.type == "numerical" and model.type != "regression":
             raise ValueError("Model type must be regression for continuous target feature")
 
     def __str__(self):
@@ -106,19 +106,42 @@ Pipeline(
         self._metrics_results = []
         predictions = self._model.predict(X)
         for metric in self._metrics:
-            result = metric.evaluate(predictions, Y)
+            result = metric(predictions, Y)
             self._metrics_results.append((metric, result))
         self._predictions = predictions
-
+        
     def execute(self):
         self._preprocess_features()
         self._split_data()
         self._train()
-        self._evaluate()
+
+        X_train = self._compact_vectors(self._train_X)
+        Y_train = self._train_y
+        predictions_train = self._model.predict(X_train)
+
+        train_metrics_results = []
+        for metric in self._metrics:
+            metric_name = metric.__class__.__name__
+            result_train = metric(predictions_train, Y_train)
+            train_metrics_results.append((metric_name, result_train))
+
+        X_test = self._compact_vectors(self._test_X)
+        Y_test = self._test_y
+        predictions_test = self._model.predict(X_test)
+
+        test_metrics_results = []
+        for metric in self._metrics:
+            metric_name = metric.__class__.__name__
+            result_test = metric(predictions_test, Y_test)
+            test_metrics_results.append((metric_name, result_test))
+
+        self._predictions = predictions_test
+
         return {
-            "metrics": self._metrics_results,
+            "train_metrics": train_metrics_results,
+            "test_metrics": test_metrics_results,
             "predictions": self._predictions,
         }
-        
 
-    
+
+        
