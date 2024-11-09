@@ -11,6 +11,7 @@ from autoop.functional.preprocessing import preprocess_features
 
 
 class Pipeline:
+    """Pipeline class for managing the training and evaluation process."""
     def __init__(
         self,
         metrics: List[Metric],
@@ -19,7 +20,22 @@ class Pipeline:
         input_features: List[Feature],
         target_feature: Feature,
         split=0.8,
-    ):
+    ) -> None:
+        """
+        Initialize the Pipeline.
+
+        Args:
+            metrics (List[Metric]): List of metrics to evaluate the model.
+            dataset (Dataset): Dataset used for training and evaluation.
+            model (Model): Machine learning model.
+            input_features (List[Feature]): List of input features.
+            target_feature (Feature): Target feature.
+            split (float): Train-test split ratio.
+
+        Raises:
+            ValueError: If the model type and target
+            feature type are incompatible.
+        """
         self._dataset = dataset
         self._model = model
         self._input_features = input_features
@@ -38,7 +54,8 @@ class Pipeline:
                 "Model type must be regression for continuous target feature"
             )
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """String representation of the Pipeline."""
         return f"""
 Pipeline(
     model={self._model.type},
@@ -50,13 +67,23 @@ Pipeline(
 """
 
     @property
-    def model(self):
+    def model(self) -> Model:
+        """
+        Get the model used in the pipeline.
+
+        Returns:
+            Model: The machine learning model used.
+        """
         return self._model
 
     @property
     def artifacts(self) -> List[Artifact]:
-        """Used to get the artifacts generated during
-        the pipeline execution to be saved"""
+        """
+        Retrieve artifacts generated during pipeline execution.
+
+        Returns:
+            List[Artifact]: List of artifacts.
+        """
         artifacts = []
         for name, artifact in self._artifacts.items():
             artifact_type = artifact.get("type")
@@ -81,10 +108,23 @@ Pipeline(
         )
         return artifacts
 
-    def _register_artifact(self, name: str, artifact):
+    def _register_artifact(self, name: str, artifact: dict) -> None:
+        """
+        Register an artifact by name.
+
+        Args:
+            name (str): Name of the artifact.
+            artifact (dict): Artifact data.
+        """
         self._artifacts[name] = artifact
 
-    def _preprocess_features(self):
+    def _preprocess_features(self) -> None:
+        """
+        Preprocess features and prepare input and output vectors.
+
+        Raises:
+            ValueError: If preprocessing fails for a feature.
+        """
         (target_feature_name, target_data, artifact) = preprocess_features(
             [self._target_feature], self._dataset
         )[0]
@@ -99,8 +139,8 @@ Pipeline(
         self._input_vectors = [
             data for (feature_name, data, artifact) in input_results]
 
-    def _split_data(self):
-        # Split the data into training and testing sets
+    def _split_data(self) -> None:
+        """Split data into training and testing sets."""
         split = self._split
         self._train_X = [
             vector[: int(split * len(vector))]
@@ -116,14 +156,25 @@ Pipeline(
             int(split * len(self._output_vector)):]
 
     def _compact_vectors(self, vectors: List[np.array]) -> np.array:
+        """
+        Concatenate input vectors into a single array.
+
+        Args:
+            vectors (List[np.ndarray]): List of input vectors.
+
+        Returns:
+            np.ndarray: Concatenated array.
+        """
         return np.concatenate(vectors, axis=1)
 
-    def _train(self):
+    def _train(self) -> None:
+        """Train the model using the training data."""
         X = self._compact_vectors(self._train_X)
         Y = self._train_y
         self._model.fit(X, Y)
 
-    def _evaluate(self):
+    def _evaluate(self) -> None:
+        """Evaluate the model on the test set and store predictions."""
         X = self._compact_vectors(self._test_X)
         Y = self._test_y
         self._metrics_results = []
@@ -133,7 +184,14 @@ Pipeline(
             self._metrics_results.append((metric, result))
         self._predictions = predictions
 
-    def execute(self):
+    def execute(self) -> dict:
+        """
+        Execute the pipeline.
+
+        Returns:
+            dict: Dictionary containing training and
+            testing metrics, and predictions.
+        """
         self._preprocess_features()
         self._split_data()
         self._train()
