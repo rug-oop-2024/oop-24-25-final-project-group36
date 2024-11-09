@@ -15,7 +15,16 @@ from autoop.core.ml.model import get_model, \
 st.set_page_config(page_title="Modelling", page_icon="📈")
 
 
-def write_helper_text(text: str):
+def write_helper_text(text: str) -> None:
+    """
+    Shows text in a styled format using Streamlit's write function.
+
+    Args:
+        text (str): The text to be displayed as helper text.
+
+    Returns:
+        None
+    """
     st.write(f'<p style="color: #888;">{text}</p>', unsafe_allow_html=True)
 
 
@@ -32,6 +41,21 @@ datasets = automl.registry.list(type="dataset")
 
 # hina code below
 def artifact_to_dataset(artifact: Artifact) -> Dataset:
+    """
+    Convert an Artifact object to a Dataset object
+    if the artifact type is "dataset".
+
+    Args:
+        artifact (Artifact): The artifact to be converted,
+                            the type shoule be "dataset".
+
+    Returns:
+        Dataset:
+            A Dataset object with the same properties as the provided artifact.
+
+    Raises:
+        ValueError: If the artifact type is not "dataset".
+    """
     if artifact.type == "dataset":
         return Dataset(
             name=artifact.name,

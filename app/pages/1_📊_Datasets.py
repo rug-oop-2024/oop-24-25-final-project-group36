@@ -14,6 +14,17 @@ st.title("Dataset")
 
 
 def generate_file_hash(file) -> str:
+    """
+    Generate an MD5 hash for a file-like object.
+
+    Args:
+        file:
+            A file-like object opened in binary mode.
+            The file pointer will be reset to the beginning after hashing.
+
+    Returns:
+        str: The MD5 hash of the file's contents as a hexadecimal string.
+    """
     hasher = hashlib.md5()
     for chunk in iter(lambda: file.read(4096), b""):
         hasher.update(chunk)
