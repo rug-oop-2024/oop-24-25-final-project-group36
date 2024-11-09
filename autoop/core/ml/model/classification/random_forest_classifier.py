@@ -1,13 +1,13 @@
 import numpy as np
-from sklearn.ensemble import RandomForestClassifier
 from autoop.core.ml.model import Model
 from pydantic import PrivateAttr
-
+from sklearn.ensemble import RandomForestClassifier
 
 
 class RandomForestClassifierModel(Model):
     """
-    Random Forest Classifier model subclass that inherits from the base Model class.
+    Random Forest Classifier model subclass that inherits
+    from the base Model class.
 
     This model uses scikit-learn's RandomForestClassifier for classification.
     """
@@ -15,10 +15,12 @@ class RandomForestClassifierModel(Model):
 
     def __init__(self, hyperparameters: dict = None):
         """
-        Initialize the RandomForestClassifierModel with optional hyperparameters.
+        Initialize the RandomForestClassifierModel with
+        optional hyperparameters.
 
         Args:
-            hyperparameters (dict): Hyperparameters for the RandomForestClassifier model.
+            hyperparameters (dict): Hyperparameters for the
+            RandomForestClassifier model.
         """
         super().__init__(asset_path="random_forest_classifier",
                          data=b"",
@@ -29,7 +31,8 @@ class RandomForestClassifierModel(Model):
 
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         """
-        Train the model using the given training data by fitting scikit-learn's RandomForestClassifier.
+        Train the model using the given training data by fitting
+        scikit-learn's RandomForestClassifier.
 
         Args:
             X (np.ndarray): Training features.

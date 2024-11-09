@@ -1,9 +1,7 @@
 import streamlit as st
 import pickle
 import pandas as pd
-import io
 from app.core.system import AutoMLSystem
-from autoop.core.ml.dataset import Dataset
 
 automl = AutoMLSystem.get_instance()
 

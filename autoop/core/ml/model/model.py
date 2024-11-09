@@ -1,10 +1,10 @@
+from abc import ABC, abstractmethod
+from typing import Any, Dict, Optional
 
-from abc import abstractmethod, ABC
-from autoop.core.ml.artifact import Artifact
 import numpy as np
-from copy import deepcopy
-from typing import Literal, Any, Optional, Dict
+from autoop.core.ml.artifact import Artifact
 from pydantic import Field
+
 
 class Model(Artifact, ABC):
     """
@@ -15,11 +15,20 @@ class Model(Artifact, ABC):
         hyperparameters (dict): Hyperparameters for model configuration.
         trained (bool): Indicates whether the model has been trained.
     """
+
     parameters: Optional[Dict[str, Any]] = Field(default_factory=dict)
     hyperparameters: Optional[Dict[str, Any]] = Field(default_factory=dict)
     trained: bool = Field(default=False)
 
-    def __init__(self, asset_path: str, name: Optional[str] = "Unnamed Model", type: Optional[str] = "model", data: bytes = b"", version: str = "1.0.0", hyperparameters: dict = None):
+    def __init__(
+        self,
+        asset_path: str,
+        name: Optional[str] = "Unnamed Model",
+        type: Optional[str] = "model",
+        data: bytes = b"",
+        version: str = "1.0.0",
+        hyperparameters: dict = None,
+    ):
         """
         Initialize the model with artifact properties and hyperparameters.
 
@@ -29,9 +38,17 @@ class Model(Artifact, ABC):
             version (str): Version of the model artifact.
             hyperparameters (dict): Hyperparameters for model configuration.
         """
-        super().__init__(asset_path=asset_path, data=data, version=version, name=name, type=type) 
+        super().__init__(
+            asset_path=asset_path,
+            data=data,
+            version=version,
+            name=name,
+            type=type
+        )
         self.parameters = {}
-        self.hyperparameters = hyperparameters if hyperparameters is not None else {}
+        self.hyperparameters = (
+            hyperparameters if hyperparameters is not None else {}
+        )
         self.trained = False
 
     @abstractmethod
@@ -43,7 +60,9 @@ class Model(Artifact, ABC):
             X (np.ndarray): Training features.
             y (np.ndarray): Training labels/targets.
         """
-        raise NotImplementedError("Subclasses must implement the train method.")
+        raise NotImplementedError(
+            "Subclasses must implement the train method."
+            )
 
     @abstractmethod
     def predict(self, X: np.ndarray) -> np.ndarray:
@@ -56,8 +75,9 @@ class Model(Artifact, ABC):
         Returns:
             np.ndarray: Model predictions.
         """
-        raise NotImplementedError("Subclasses must implement the predict method.")
-
+        raise NotImplementedError(
+            "Subclasses must implement the predict method."
+            )
 
     def is_trained(self) -> bool:
         """

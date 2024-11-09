@@ -1,11 +1,13 @@
 import numpy as np
-from sklearn.svm import SVC
 from autoop.core.ml.model import Model
 from pydantic import PrivateAttr
+from sklearn.svm import SVC
+
 
 class SupportVectorClassifier(Model):
     """
-    Support Vector Classifier (SVC) subclass that inherits from the base Model class.
+    Support Vector Classifier (SVC) subclass that inherits
+    from the base Model class.
 
     This model uses scikit-learn's SVC for classification.
     """
@@ -27,7 +29,8 @@ class SupportVectorClassifier(Model):
 
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         """
-        Train the model using the given training data by fitting scikit-learn's SVC model.
+        Train the model using the given training data by
+        fitting scikit-learn's SVC model.
 
         Args:
             X (np.ndarray): Training features.

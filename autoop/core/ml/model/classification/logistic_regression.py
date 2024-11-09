@@ -1,7 +1,8 @@
 import numpy as np
-from sklearn.linear_model import LogisticRegression
 from autoop.core.ml.model import Model
 from pydantic import PrivateAttr
+from sklearn.linear_model import LogisticRegression
+
 
 class LogisticRegressionClassifier(Model):
     """
@@ -13,10 +14,12 @@ class LogisticRegressionClassifier(Model):
 
     def __init__(self, hyperparameters: dict = None):
         """
-        Initialize the LogisticRegressionClassifier with optional hyperparameters.
+        Initialize the LogisticRegressionClassifier with
+        optional hyperparameters.
 
         Args:
-            hyperparameters (dict): Hyperparameters for the LogisticRegression model.
+            hyperparameters (dict): Hyperparameters
+            for the LogisticRegression model.
         """
         super().__init__(name="logistic_regression",
                          asset_path="logistic_regression",
@@ -28,7 +31,8 @@ class LogisticRegressionClassifier(Model):
 
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         """
-        Train the model using the given training data by fitting scikit-learn's LogisticRegression model.
+        Train the model using the given training data by fitting
+        scikit-learn's LogisticRegression model.
 
         Args:
             X (np.ndarray): Training features.
@@ -52,5 +56,3 @@ class LogisticRegressionClassifier(Model):
         if not self.trained:
             raise ValueError("Model has not been trained yet.")
         return self._model.predict(X)
-
- 
