@@ -89,7 +89,7 @@ if pipelines:
                     )
 
                     if len(selected_input_features) != len(
-                                loaded_pipeline._input_features):
+                            loaded_pipeline._input_features):
                         raise ValueError(
                             "Make sure the number of input features \
                                 matches what the pipeline was trained on."

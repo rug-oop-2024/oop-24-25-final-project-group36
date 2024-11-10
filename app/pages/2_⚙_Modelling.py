@@ -81,9 +81,9 @@ with col2:
 
         st.warning("Cache has been cleared, refresh the page.")
 
-selected_dataset = st.selectbox(
-        "Select a dataset for modeling",
-        artifact_datasets, format_func=lambda x: x.name)
+selected_dataset = st.selectbox("Select a dataset for modeling",
+                                artifact_datasets,
+                                format_func=lambda x: x.name)
 
 if selected_dataset:
     st.write(f"Your selected dataset: {selected_dataset.name}")

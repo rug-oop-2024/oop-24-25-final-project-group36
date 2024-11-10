@@ -4,7 +4,7 @@ import hashlib
 from app.core.system import AutoMLSystem
 from autoop.core.ml.dataset import Dataset
 import streamlit as st
-
+from typing import Any
 automl = AutoMLSystem.get_instance()
 
 datasets = automl.registry.list(type="dataset")
@@ -13,7 +13,7 @@ datasets = automl.registry.list(type="dataset")
 st.title("Dataset")
 
 
-def generate_file_hash(file) -> str:
+def generate_file_hash(file: Any) -> str:
     """
     Generate an MD5 hash for a file-like object.
 
