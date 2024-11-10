@@ -1,5 +1,4 @@
 from sklearn.linear_model import ElasticNet
-from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import GridSearchCV
 from autoop.core.ml.model import Model
 from pydantic import PrivateAttr
@@ -13,7 +12,6 @@ class ElasticNetRegression(Model):
     """
 
     _model: ElasticNet = PrivateAttr()
-    _scaler: StandardScaler = PrivateAttr()
     _grid_search: GridSearchCV = PrivateAttr(default=None)
 
     def __init__(self,
