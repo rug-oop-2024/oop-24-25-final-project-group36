@@ -76,6 +76,12 @@ class MeanSquaredError(Metric):
     ) -> float:
         """
         Calculate the Mean Squared Error between ground truth and predictions.
+        Args:
+            y_true (Union[np.ndarray, list]): Ground truth values.
+            y_pred (Union[np.ndarray, list]): Predicted values.
+
+        Returns:
+            float: The Mean Squared Error value.
         """
         y_true = np.array(y_true)
         y_pred = np.array(y_pred)
@@ -92,6 +98,12 @@ class Accuracy(Metric):
     ) -> float:
         """
         Calculate the Accuracy between ground truth and predictions.
+        Args:
+            y_true (Union[np.ndarray, list]): Ground truth values.
+            y_pred (Union[np.ndarray, list]): Predicted values.
+
+        Returns:
+            float: The Accuracy value.
         """
         y_true = np.array(y_true)
         y_pred = np.array(y_pred)
@@ -128,27 +140,28 @@ class MeanAbsoluteError(Metric):
 
 class R2Score(Metric):
     """
-    R² (Coefficient of Determination) for regression tasks.
+    R^2 (Coefficient of Determination) for regression tasks.
     """
 
     def __call__(
         self, y_true: Union[np.ndarray, list], y_pred: Union[np.ndarray, list]
     ) -> float:
         """
-        Calculate the R² score between ground truth and predictions.
+        Calculate the R^2 score between ground truth and predictions.
 
         Args:
             y_true (Union[np.ndarray, list]): Ground truth values.
             y_pred (Union[np.ndarray, list]): Predicted values.
 
         Returns:
-            float: The R² score.
+            float: The R^2 score.
         """
         y_true = np.array(y_true)
         y_pred = np.array(y_pred)
         total_variance = np.sum((y_true - np.mean(y_true)) ** 2)
         residual_variance = np.sum((y_true - y_pred) ** 2)
-        return 1 - (residual_variance / total_variance) if total_variance > 0 else 0.0
+        return 1 - (residual_variance / total_variance) \
+            if total_variance > 0 else 0.0
 
 
 class Precision(Metric):
