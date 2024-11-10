@@ -184,6 +184,26 @@ Pipeline(
             self._metrics_results.append((metric, result))
         self._predictions = predictions
 
+    def set_dataset_and_features(
+        self,
+        new_dataset: Dataset,
+        new_input_features: List[Feature],
+        new_target_feature: Feature
+    ) -> None:
+        """
+        Update the pipeline with a new dataset,
+        input features, and target feature.
+
+        Args:
+            new_dataset (Dataset): The new dataset to use.
+            new_input_features (List[Feature]): New input features.
+            new_target_feature (Feature): New target feature.
+        """
+        self._dataset = new_dataset
+        self._input_features = new_input_features
+        self._target_feature = new_target_feature
+        self._split = 0
+
     def execute(self) -> dict:
         """
         Execute the pipeline.
@@ -194,17 +214,20 @@ Pipeline(
         """
         self._preprocess_features()
         self._split_data()
-        self._train()
+        train_metrics_results = ["Already trained"]
+        if not self._model.trained:
 
-        X_train = self._compact_vectors(self._train_X)
-        Y_train = self._train_y
-        predictions_train = self._model.predict(X_train)
+            self._train()
 
-        train_metrics_results = []
-        for metric in self._metrics:
-            metric_name = metric.__class__.__name__
-            result_train = metric(predictions_train, Y_train)
-            train_metrics_results.append((metric_name, result_train))
+            X_train = self._compact_vectors(self._train_X)
+            Y_train = self._train_y
+            predictions_train = self._model.predict(X_train)
+
+            train_metrics_results = []
+            for metric in self._metrics:
+                metric_name = metric.__class__.__name__
+                result_train = metric(predictions_train, Y_train)
+                train_metrics_results.append((metric_name, result_train))
 
         X_test = self._compact_vectors(self._test_X)
         Y_test = self._test_y

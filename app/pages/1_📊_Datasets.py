@@ -4,7 +4,6 @@ import hashlib
 from app.core.system import AutoMLSystem
 from autoop.core.ml.dataset import Dataset
 import streamlit as st
-import io
 
 automl = AutoMLSystem.get_instance()
 
@@ -14,7 +13,7 @@ datasets = automl.registry.list(type="dataset")
 st.title("Dataset")
 
 
-def generate_file_hash(file: io.IOBase) -> str:
+def generate_file_hash(file) -> str:
     """
     Generate an MD5 hash for a file-like object.
 
@@ -55,15 +54,17 @@ if uploaded_csv_file:
                    successfully uploaded and registered!")
         st.rerun()
 
+cache = automl.registry.list()
 col1, col2 = st.columns([3, 1])
 with col1:
     st.subheader("Registered Datasets")
 
 with col2:
-    if st.button("Clear all datasets", key="delete_datasets"):
-        for dataset in datasets:
-            automl.registry.delete(dataset.id)
-        st.warning("Datasets have been cleared, refresh the page.")
+    if st.button("Clear all cache", key="delete_cache"):
+        for items in cache:
+            automl.registry.delete(items.id)
+
+        st.warning("Cache has been cleared, refresh the page.")
 
 for dataset in datasets:
     with st.container(border=True):

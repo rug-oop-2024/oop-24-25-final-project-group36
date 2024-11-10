@@ -68,10 +68,22 @@ def artifact_to_dataset(artifact: Artifact) -> Dataset:
 
 
 artifact_datasets = [artifact_to_dataset(artifact) for artifact in datasets]
+
+cache = automl.registry.list()
+col1, col2 = st.columns([3, 1])
+with col1:
+    st.subheader("Select Dataset")
+
+with col2:
+    if st.button("Clear all cache", key="delete_cache"):
+        for items in cache:
+            automl.registry.delete(items.id)
+
+        st.warning("Cache has been cleared, refresh the page.")
+
 selected_dataset = st.selectbox(
-    "Select a dataset for modeling",
-    artifact_datasets, format_func=lambda x: x.name
-)
+        "Select a dataset for modeling",
+        artifact_datasets, format_func=lambda x: x.name)
 
 if selected_dataset:
     st.write(f"Your selected dataset: {selected_dataset.name}")
@@ -149,7 +161,7 @@ if "training_complete" not in st.session_state:
 if "pipeline" not in st.session_state:
     st.session_state.pipeline = None
 
-st.title("Train the Model")
+st.subheader("Train the Model")
 if st.button("Train!"):
     pipeline = Pipeline(
         dataset=selected_dataset,
