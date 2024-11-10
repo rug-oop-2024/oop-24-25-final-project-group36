@@ -9,7 +9,7 @@ REGRESSION_METRICS = [
     "mean_squared_error",
     "mean_absolute_error",
     "r2_score",
-]  # add the names (in strings) of the metrics you implement
+]
 
 
 def get_metric(name: str) -> "Metric":
@@ -64,9 +64,6 @@ class Metric(ABC):
     def __str__(self) -> str:
         """Return the name of the metric when converted to a string."""
         return self.__class__.__name__
-
-
-# Concrete implementations of the Metric class
 
 
 class MeanSquaredError(Metric):
@@ -151,8 +148,7 @@ class R2Score(Metric):
         y_pred = np.array(y_pred)
         total_variance = np.sum((y_true - np.mean(y_true)) ** 2)
         residual_variance = np.sum((y_true - y_pred) ** 2)
-        return 1 - (residual_variance / total_variance) \
-            if total_variance > 0 else 0.0
+        return 1 - (residual_variance / total_variance) if total_variance > 0 else 0.0
 
 
 class Precision(Metric):
