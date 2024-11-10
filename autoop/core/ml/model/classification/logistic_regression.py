@@ -12,7 +12,7 @@ class LogisticRegressionClassifier(Model):
     """
     _model: LogisticRegression = PrivateAttr()
 
-    def __init__(self, hyperparameters: dict = None):
+    def __init__(self, hyperparameters: dict = None) -> None:
         """
         Initialize the LogisticRegressionClassifier with
         optional hyperparameters.

@@ -16,7 +16,9 @@ class ElasticNetRegression(Model):
     _scaler: StandardScaler = PrivateAttr()
     _grid_search: GridSearchCV = PrivateAttr(default=None)
 
-    def __init__(self, hyperparameters: dict = None, param_grid: dict = None):
+    def __init__(self,
+                 hyperparameters: dict = None,
+                 param_grid: dict = None) -> None:
         """
         Initialize ElasticNetRegression with optional
         hyperparameters and a parameter grid for GridSearch.

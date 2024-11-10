@@ -13,7 +13,7 @@ class RandomForestClassifierModel(Model):
     """
     _model: RandomForestClassifier = PrivateAttr()
 
-    def __init__(self, hyperparameters: dict = None):
+    def __init__(self, hyperparameters: dict = None) -> None:
         """
         Initialize the RandomForestClassifierModel with
         optional hyperparameters.

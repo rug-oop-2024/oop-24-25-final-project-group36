@@ -13,7 +13,7 @@ class MultipleLinearRegression(Model):
 
     _model: LinearRegression = PrivateAttr()
 
-    def __init__(self, hyperparameters: dict = None):
+    def __init__(self, hyperparameters: dict = None) -> None:
         """
         Initialize the MultipleLinearRegression model with
         required fields for the Artifact.

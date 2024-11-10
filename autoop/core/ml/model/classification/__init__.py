@@ -1,3 +1,12 @@
+"""
+This package contains implementation of various classification models.
+This includes: Logistic Regression, Random Forest Classifier,
+and Support Vector Classifier.
+
+These models can be utilized for classification tasks
+and are designed to integrate with the AutoML framework.
+"""
+
 from autoop.core.ml.model.classification.logistic_regression import (
     LogisticRegressionClassifier,
 )

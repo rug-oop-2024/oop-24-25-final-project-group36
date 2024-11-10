@@ -1,3 +1,11 @@
+"""
+This package contains implementation of various regression models.
+This includes: Multiple Linear Regression, Elastic Net Regression,
+and Gradient Boosting Regression.
+
+These models can be utilized for regression tasks
+and are designed to integrate with the AutoML framework.
+"""
 from autoop.core.ml.model.regression.multiple_linear_regression import (
     MultipleLinearRegression,
 )

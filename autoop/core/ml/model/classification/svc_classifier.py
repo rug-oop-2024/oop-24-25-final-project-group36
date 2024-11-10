@@ -13,7 +13,7 @@ class SupportVectorClassifier(Model):
     """
     _model: SVC = PrivateAttr()
 
-    def __init__(self, hyperparameters: dict = None):
+    def __init__(self, hyperparameters: dict = None) -> None:
         """
         Initialize the SupportVectorClassifier with optional hyperparameters.
 

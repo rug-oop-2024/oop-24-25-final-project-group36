@@ -12,15 +12,18 @@ REGRESSION_METRICS = [
 ]  # add the names (in strings) of the metrics you implement
 
 
-def get_metric(name: str):
+def get_metric(name: str) -> "Metric":
     """
-    Factory function to get a metric by its name.
+    Gets metric by its name.
 
     Args:
         name (str): The name of the metric.
 
     Returns:
         Metric: An instance of the requested metric class.
+
+    Raises:
+        ValueError: If the metric name is not recognized.
     """
     if name == "accuracy":
         return Accuracy()
@@ -111,6 +114,16 @@ class MeanAbsoluteError(Metric):
     def __call__(
         self, y_true: Union[np.ndarray, list], y_pred: Union[np.ndarray, list]
     ) -> float:
+        """
+        Calculate the Mean Absolute Error between ground truth and predictions.
+
+        Args:
+            y_true (Union[np.ndarray, list]): Ground truth values.
+            y_pred (Union[np.ndarray, list]): Predicted values.
+
+        Returns:
+            float: The Mean Absolute Error value.
+        """
         y_true = np.array(y_true)
         y_pred = np.array(y_pred)
         return np.mean(np.abs(y_true - y_pred))
@@ -124,13 +137,22 @@ class R2Score(Metric):
     def __call__(
         self, y_true: Union[np.ndarray, list], y_pred: Union[np.ndarray, list]
     ) -> float:
+        """
+        Calculate the R² score between ground truth and predictions.
+
+        Args:
+            y_true (Union[np.ndarray, list]): Ground truth values.
+            y_pred (Union[np.ndarray, list]): Predicted values.
+
+        Returns:
+            float: The R² score.
+        """
         y_true = np.array(y_true)
         y_pred = np.array(y_pred)
         total_variance = np.sum((y_true - np.mean(y_true)) ** 2)
         residual_variance = np.sum((y_true - y_pred) ** 2)
-        return 1 - (
-            residual_variance / total_variance
-            ) if total_variance > 0 else 0.0
+        return 1 - (residual_variance / total_variance) \
+            if total_variance > 0 else 0.0
 
 
 class Precision(Metric):
@@ -141,6 +163,16 @@ class Precision(Metric):
     def __call__(
         self, y_true: Union[np.ndarray, list], y_pred: Union[np.ndarray, list]
     ) -> float:
+        """
+        Calculate the Precision score between ground truth and predictions.
+
+        Args:
+            y_true (Union[np.ndarray, list]): Ground truth labels.
+            y_pred (Union[np.ndarray, list]): Predicted labels.
+
+        Returns:
+            float: The precision score.
+        """
         y_true = np.array(y_true)
         y_pred = np.array(y_pred)
         if y_true.ndim > 1:
@@ -172,6 +204,16 @@ class Recall(Metric):
     def __call__(
         self, y_true: Union[np.ndarray, list], y_pred: Union[np.ndarray, list]
     ) -> float:
+        """
+        Calculate the Recall score between ground truth and predictions.
+
+        Args:
+            y_true (Union[np.ndarray, list]): Ground truth labels.
+            y_pred (Union[np.ndarray, list]): Predicted labels.
+
+        Returns:
+            float: The recall score.
+        """
         y_true = np.array(y_true)
         y_pred = np.array(y_pred)
         if y_true.ndim > 1:

@@ -1,3 +1,8 @@
+"""
+This module provides machine learning models
+for classification and regression tasks.
+"""
+
 from autoop.core.ml.model.classification import (
     LogisticRegressionClassifier,
     RandomForestClassifierModel,

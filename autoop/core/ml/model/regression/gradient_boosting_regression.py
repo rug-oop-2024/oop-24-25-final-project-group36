@@ -15,7 +15,7 @@ class GradientBoostingRegression(Model):
 
     _model: GradientBoostingRegressor = PrivateAttr()
 
-    def __init__(self, hyperparameters: dict = None):
+    def __init__(self, hyperparameters: dict = None) -> None:
         """
         Initialize the GradientBoostingRegression
         model with optional hyperparameters.

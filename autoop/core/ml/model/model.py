@@ -28,7 +28,7 @@ class Model(Artifact, ABC):
         data: bytes = b"",
         version: str = "1.0.0",
         hyperparameters: dict = None,
-    ):
+    ) -> None:
         """
         Initialize the model with artifact properties and hyperparameters.
 
@@ -61,8 +61,7 @@ class Model(Artifact, ABC):
             y (np.ndarray): Training labels/targets.
         """
         raise NotImplementedError(
-            "Subclasses must implement the train method."
-            )
+            "Subclasses must implement the train method.")
 
     @abstractmethod
     def predict(self, X: np.ndarray) -> np.ndarray:
@@ -76,8 +75,7 @@ class Model(Artifact, ABC):
             np.ndarray: Model predictions.
         """
         raise NotImplementedError(
-            "Subclasses must implement the predict method."
-            )
+            "Subclasses must implement the predict method.")
 
     def is_trained(self) -> bool:
         """
