@@ -17,7 +17,7 @@ class ArtifactRegistry:
         _storage (Storage): The storage system for storing artifact data.
     """
 
-    def __init__(self, database: Database, storage: Storage):
+    def __init__(self, database: Database, storage: Storage) -> None:
         """
         Initialize the ArtifactRegistry with database and storage.
 
@@ -128,10 +128,9 @@ class AutoMLSystem:
         _registry (ArtifactRegistry):
             The registry managing artifacts within the system.
     """
-
     _instance = None
 
-    def __init__(self, storage: LocalStorage, database: Database):
+    def __init__(self, storage: LocalStorage, database: Database) -> None:
         """
         Initialize the AutoMLSystem with
         specific storage and database instances.

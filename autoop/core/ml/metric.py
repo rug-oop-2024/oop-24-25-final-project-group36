@@ -61,7 +61,7 @@ class Metric(ABC):
             float: The calculated metric value.
         """
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Return the name of the metric when converted to a string."""
         return self.__class__.__name__
 

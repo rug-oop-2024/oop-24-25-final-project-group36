@@ -10,7 +10,7 @@ class Dataset(Artifact):
     Provides methods for converting data between
     pandas DataFrames and byte-encoded CSV format for storage.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         """
         Initialize Dataset artifact with the specified arguments,
         enforcing the artifact type as "dataset".

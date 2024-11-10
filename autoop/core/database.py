@@ -16,7 +16,7 @@ class Database:
         _data (dict):
             In-memory storage for data organized by collections and IDs.
     """
-    def __init__(self, storage: Storage):
+    def __init__(self, storage: Storage) -> None:
         """
         Initialize the Database with a specified storage system
         and load any existing data.

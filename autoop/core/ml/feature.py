@@ -16,4 +16,13 @@ class Feature(BaseModel):
     type: Literal["categorical", "numerical"]
 
     def __str__(self) -> str:
+        """
+        Returns string representation of the Feature instance.
+
+        Generates string that includes the name and type of the feature
+        in the format: "Feature(name={name}, type={type})".
+
+        Returns:
+            str: A string describing the Feature object.
+        """
         return f"Feature(name={self.name}, type={self.type})"
